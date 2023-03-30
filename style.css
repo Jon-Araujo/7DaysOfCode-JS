@@ -1,0 +1,138 @@
+body {
+    font-family: 'Kumbh Sans', sans-serif;
+    background-color: #17162E;
+    color: #FFFFFF;
+}
+
+.cabecalho {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cabecalho h1 {
+    padding: 3rem 0;
+    font-weight: 600;
+    font-size: 36px;
+}
+
+.pesquisa-box {
+    display: flex;
+    width: 80%;
+    justify-content: center;
+}
+
+.pesquisa {
+    width: 30%;
+    border-radius: 8px 0 0 8px;
+    background-color: rgb(255, 255, 255, 0.2);
+    padding: 1.2rem;
+    border: none;
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.pesquisa::placeholder {
+    font-size: 18px;
+    color: #8A8A8A;
+    font-weight: 500;
+}
+
+.lupa {
+    border-radius: 0 8px 8px 0;
+    border: none;
+    background-color: rgb(255, 255, 255, 0.2);
+    padding: 1.2rem;
+}
+
+.cabecalho label {
+    padding: 1.5rem 0 3rem;
+    display: flex;
+    align-items: center;
+}
+
+#apenas-fav {
+    display: none;
+}
+
+#apenas-fav:checked+.check {
+    background-color: #706EA8;
+    content: url('img/checked.svg');
+}
+
+.check {
+    width: 12px;
+    height: 12px;
+    background-color: #17162E;
+    border: 2px solid #706EA8;
+    margin-right: 0.5rem;
+    border-radius: 4px;
+}
+
+.filmes-cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card {
+    display: flex;
+    background-color: #1D1C3B;
+    box-shadow: 32.8387px 24.5482px 79px rgba(0, 0, 0, 0.15),
+        23.8851px 17.855px 53.2479px rgba(0, 0, 0, 0.121406),
+        16.6246px 12.4276px 34.4391px rgba(0, 0, 0, 0.10125),
+        10.9035px 8.15079px 21.3701px rgba(0, 0, 0, 0.0867188),
+        6.56775px 4.90965px 12.8375px rgba(0, 0, 0, 0.075),
+        3.46346px 2.58907px 7.6377px rgba(0, 0, 0, 0.0632813),
+        1.4367px 1.07399px 4.56719px rgba(0, 0, 0, 0.04875),
+        0.333519px 0.249318px 2.42246px rgba(0, 0, 0, 0.0285938);
+    width: 80%;
+    margin: 0 0 3rem 0;
+    padding: 2rem 2.5rem;
+    align-items: center;
+}
+
+.img-filme {
+    border-radius: 100%;
+    max-width: 160px;
+    min-height: 160px;
+    filter: drop-shadow(20px 20px 30px rgba(0, 0, 0, 0.3));
+}
+
+.box-card {
+    display: flex;
+    flex-direction: column;
+    margin: 0 5rem;
+    width: 50%;
+}
+
+.classificacao {
+    display: flex;
+}
+
+.texto-card1 {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 22px;
+    margin-bottom: 1em;
+}
+
+.texto-card2 {
+    font-size: 18px;
+    font-weight: 400;
+    margin-left: 1rem;
+}
+
+.icone-coracao {
+    margin-left: 2.5rem;
+}
+
+.sinopse {
+    font-size: 18px;
+    font-weight: 500;
+    color: #ACACAC;
+    line-height: 22px;
+    min-width: 600px;
+    max-width: 600px;
+}

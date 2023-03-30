@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies</title>
+
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body onload="solicitaMovies()">
+    <header>
+        <div class="cabecalho">
+            <h1>Filmes Populares</h1>
+            <div class="pesquisa-box">
+                <input type="text" placeholder="Digite algum filme para pesquisar..." class="pesquisa">
+                <button class="lupa"><img src="img/search-icon.svg" alt="Icone da lupa - indicando pesquisar"></button>
+            </div>
+            <label for="apenas-fav">
+                <input id="apenas-fav" type="checkbox">
+                <span class="check"></span>
+                Mostrar meus filmes favoritos apenas
+            </label>
+
+        </div>
+    </header>
+
+    <main>
+        <section class="filmes-cards"></section>
+    </main>
+    <script src="./main.js"></script>
+</body>
+
+</html>
