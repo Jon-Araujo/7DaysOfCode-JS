@@ -10,8 +10,9 @@ body {
     align-items: center;
 }
 
-.cabecalho h1 {
-    padding: 3rem 0;
+#titulo-principal {
+    cursor: pointer;
+    margin: 3rem 0;
     font-weight: 600;
     font-size: 36px;
 }
