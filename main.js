@@ -1,14 +1,18 @@
-const allCards = document.querySelector(".filmes-cards");
-
 //################################################# Recarregar página com resultados gerais:
 const tituloPrincipal = document.getElementById('titulo-principal');
 tituloPrincipal.addEventListener("click", () => { window.location.reload() })
 
 //################################################# Função que puxa dados gerais da API:
 
+const allCards = document.querySelector(".filmes-cards");
+
 const movies = [];
 
+const noFavImg = '<img class="icone-coracao" src="img/Heart.svg" alt="Icone de coração">';
+const favImg = '<img class="icone-coracao" id="favoritado" src="img/Vector.svg" alt="Icone de coração">'
+
 async function solicitaMovies() {
+
     var KeyAPI = await (await fetch('./KeyAPI.json')).json();
 
     var moviesAPI = await (await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${KeyAPI.chave.key}`)).json();
@@ -19,19 +23,24 @@ async function solicitaMovies() {
     allCards.innerHTML = "";
 
     for (let i = 0; i < movies.length; i++) {
-        renderMovie(i, movies)
+        renderMovie(i, movies, noFavImg)
     }
 
     //############################################# Botão de favoritar:
-
     const btnHeart = document.querySelectorAll('.icone-coracao');
     const card = document.querySelectorAll(".card");
+    const spanFavImg = document.querySelectorAll(".spanFavImg");
+
     for (let i = 0; i < btnHeart.length; i++) {
         btnHeart[i].addEventListener("click", () => {
+            spanFavImg[i].innerHTML = favImg
             favoriteMovies(card[i])
         })
     }
 
+    // //############################################# Funcionalidade de trocar img so coração de favorito:
+    // const btnNoFavImg = document.querySelectorAll('#favoritado')
+    // btnNoFavImg.setAttribute("src", "img/Heart.svg")
 };
 
 //######################################### Funcionalidade que permite buscar apertando Enter ou clicando no icone de busca:
@@ -72,7 +81,7 @@ async function pesquisaMovies() {
 
 //################################################# Função que recebe dados já puxados da API para mostrar resultados na tela:
 
-async function renderMovie(qtd, lista) {
+async function renderMovie(qtd, lista, favImg) {
     if (lista[qtd].backdrop_path == null) {
         allCards.innerHTML += `
         <article class="card">
@@ -82,7 +91,7 @@ async function renderMovie(qtd, lista) {
                 <div class="classificacao">
                     <img src="img/Star.svg" alt="Icone de estrela">
                     <p class="texto-card2">${lista[qtd].vote_average}</p>
-                    <img alt="Icone do coração" class="icone-coracao">
+                    <span class="spanFavImg">${favImg}</span>
                     <p class="texto-card2">Favoritar</p>
                 </div>
             </div>
@@ -91,14 +100,14 @@ async function renderMovie(qtd, lista) {
         `
     } else {
         allCards.innerHTML += `
-        <article class="card">
+        <article class="card" id="${qtd}">
             <img class="img-filme" src="https://image.tmdb.org/t/p/w500/${lista[qtd].backdrop_path}">
             <div class="box-card">
                 <p class="texto-card1">${lista[qtd].title} (${lista[qtd].release_date.slice(0, 4)})</p>
                 <div class="classificacao">
                     <img src="img/Star.svg" alt="Icone de estrela">
                     <p class="texto-card2">${lista[qtd].vote_average}</p>
-                    <img class="icone-coracao" src="img/Heart.svg" alt="Icone de coração">
+                    <span class="spanFavImg">${favImg}</span>
                     <p class="texto-card2">Favoritar</p>
                 </div>
             </div>
@@ -113,7 +122,7 @@ async function renderMovie(qtd, lista) {
 function favoriteMovies(card) {
 
     if (localStorage.favoriteMovies) {
-        listFavorites = JSON.parse(localStorage.getItem('favoriteMovies'))
+        var listFavorites = JSON.parse(localStorage.getItem('favoriteMovies'))
     }
 
     else {
@@ -122,6 +131,7 @@ function favoriteMovies(card) {
 
     listFavorites.push(card.outerHTML)
     localStorage.favoriteMovies = JSON.stringify(listFavorites);
+
 };
 
 //################################################# Função para mostrar apenas cards favoritados:
@@ -135,11 +145,43 @@ onlyFav.addEventListener("click", showFavorites)
     if (localStorage.favoriteMovies) {
         var listJSON = JSON.parse(localStorage.getItem('favoriteMovies'));
         for (let i = 0; i < listJSON.length; i++) {
-            allCards.innerHTML = `${listJSON[i]}`
+            allCards.innerHTML += `${listJSON[i]}`;
         };
         onlyFav.addEventListener("click", () => {window.location.reload()})
     } else {
-        allCards.innerHTML = `<h2>Não há filmes favoritados!</h2>`;
+        allCards.innerHTML = `
+        <div class="sem-fav">
+        <h2>Não há filmes favoritados!</h2>
+        <img class="img-bandeja" src="img/bandeja.png" alt="bandeja vazia">
+        </div>`;
         onlyFav.addEventListener("click", () => {window.location.reload()})
     }
+    disFavor()
+ }
+
+ //################################################ Função para retirar cards da lista de favoritados:
+
+ function disFavor() {
+    var listFavorites = JSON.parse(localStorage.getItem('favoriteMovies'));
+    const btnHeart = document.querySelectorAll('.icone-coracao');
+    
+    for (let i = 0; i < btnHeart.length; i++) {
+        btnHeart[i].addEventListener("click", () => {
+            listFavorites.splice(i, 1);
+            if (listFavorites.length > 0) {
+                localStorage.favoriteMovies = JSON.stringify(listFavorites)
+                showFavorites()
+            } else {
+                localStorage.clear()
+                allCards.innerHTML = `
+        <div class="sem-fav">
+        <h2>Não há filmes favoritados!</h2>
+        <img class="img-bandeja" src="img/bandeja.png" alt="bandeja vazia">
+        </div>`;
+            }
+        })
+    }
+
+    
+    
  }

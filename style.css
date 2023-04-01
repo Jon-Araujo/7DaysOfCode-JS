@@ -137,3 +137,15 @@ body {
     min-width: 600px;
     max-width: 600px;
 }
+
+.sem-fav {
+    font-size: 2em;
+    font-weight: bold;
+    margin-top: 1em;
+    text-align: center;
+}
+
+.img-bandeja {
+    max-width: 250px;
+    margin-top: 1em;
+}
