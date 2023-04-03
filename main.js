@@ -27,6 +27,7 @@ async function solicitaMovies() {
     }
 
     //############################################# Botão de favoritar:
+
     const btnHeart = document.querySelectorAll('.icone-coracao');
     const card = document.querySelectorAll(".card");
     const spanFavImg = document.querySelectorAll(".spanFavImg");
@@ -38,10 +39,35 @@ async function solicitaMovies() {
         })
     }
 
-    // //############################################# Funcionalidade de trocar img so coração de favorito:
-    // const btnNoFavImg = document.querySelectorAll('#favoritado')
-    // btnNoFavImg.setAttribute("src", "img/Heart.svg")
+
+    // const btnHeart = document.querySelectorAll('.icone-coracao');
+    // const card = document.querySelectorAll(".card");
+
+    // for (let i = 0; i < btnHeart.length; i++) {
+    //     // like(i, btnHeart, card)
+    //     btnHeart[i].addEventListener("click", () => {
+    //         btnHeart[i].setAttribute("src", "img/Vector.svg")
+    //         favoriteMovies(card[i])
+    //     })
+    // }
 };
+
+// function like(i, btn, card) {
+//     btn[i].addEventListener("click", () => {
+//         btn[i].setAttribute("src", "img/Vector.svg")
+//         favoriteMovies(card[i])
+//         deslike(i, btn, card)
+//     })
+// }
+
+// function deslike(i, btn, card) {
+//     btn[i].addEventListener("click", () => {
+//         btn[i].setAttribute("src", "img/Heart.svg")
+
+//         like(i, btn, card)
+//     })
+// }
+
 
 //######################################### Funcionalidade que permite buscar apertando Enter ou clicando no icone de busca:
 const pesquisa = document.querySelector('.lupa');
@@ -73,15 +99,33 @@ async function pesquisaMovies() {
     allCards.innerHTML = "";
 
     for (let i = 0; i < filmesPesquisados.length; i++) {
-        renderMovie(i, filmesPesquisados)
+        renderMovie(i, filmesPesquisados, noFavImg)
     };
+    //############################################# Botão de favoritar:
+
+    const btnHeart = document.querySelectorAll('.icone-coracao');
+    const card = document.querySelectorAll(".card");
+    const spanFavImg = document.querySelectorAll(".spanFavImg");
+
+    for (let i = 0; i < btnHeart.length; i++) {
+        btnHeart[i].addEventListener("click", () => {
+            spanFavImg[i].innerHTML = favImg
+            favoriteMovies(card[i])
+        })
+    }
 
 
 };
 
 //################################################# Função que recebe dados já puxados da API para mostrar resultados na tela:
 
-async function renderMovie(qtd, lista, favImg) {
+async function renderMovie(qtd, lista, img) {
+    // var listFavorites = JSON.parse(localStorage.getItem('favoriteMovies'))
+
+    // for (let i = 0; i < lista.length; i++) {
+    //     var result = lista.filter((card) => card === listFavorites[i])
+    // }
+
     if (lista[qtd].backdrop_path == null) {
         allCards.innerHTML += `
         <article class="card">
@@ -91,7 +135,7 @@ async function renderMovie(qtd, lista, favImg) {
                 <div class="classificacao">
                     <img src="img/Star.svg" alt="Icone de estrela">
                     <p class="texto-card2">${lista[qtd].vote_average}</p>
-                    <span class="spanFavImg">${favImg}</span>
+                    <span class="spanFavImg">${img}</span>
                     <p class="texto-card2">Favoritar</p>
                 </div>
             </div>
@@ -107,7 +151,7 @@ async function renderMovie(qtd, lista, favImg) {
                 <div class="classificacao">
                     <img src="img/Star.svg" alt="Icone de estrela">
                     <p class="texto-card2">${lista[qtd].vote_average}</p>
-                    <span class="spanFavImg">${favImg}</span>
+                    <span class="spanFavImg">${img}</span>
                     <p class="texto-card2">Favoritar</p>
                 </div>
             </div>
@@ -139,7 +183,7 @@ function favoriteMovies(card) {
 var onlyFav = document.querySelector('.check');
 onlyFav.addEventListener("click", showFavorites)
 
- function showFavorites() {
+function showFavorites() {
     allCards.innerHTML = "";
 
     if (localStorage.favoriteMovies) {
@@ -147,24 +191,24 @@ onlyFav.addEventListener("click", showFavorites)
         for (let i = 0; i < listJSON.length; i++) {
             allCards.innerHTML += `${listJSON[i]}`;
         };
-        onlyFav.addEventListener("click", () => {window.location.reload()})
+        onlyFav.addEventListener("click", () => { window.location.reload() })
     } else {
         allCards.innerHTML = `
         <div class="sem-fav">
         <h2>Não há filmes favoritados!</h2>
         <img class="img-bandeja" src="img/bandeja.png" alt="bandeja vazia">
         </div>`;
-        onlyFav.addEventListener("click", () => {window.location.reload()})
+        onlyFav.addEventListener("click", () => { window.location.reload() })
     }
     disFavor()
- }
+}
 
- //################################################ Função para retirar cards da lista de favoritados:
+//################################################ Função para retirar cards da lista de favoritados:
 
- function disFavor() {
+function disFavor() {
     var listFavorites = JSON.parse(localStorage.getItem('favoriteMovies'));
     const btnHeart = document.querySelectorAll('.icone-coracao');
-    
+
     for (let i = 0; i < btnHeart.length; i++) {
         btnHeart[i].addEventListener("click", () => {
             listFavorites.splice(i, 1);
@@ -182,6 +226,6 @@ onlyFav.addEventListener("click", showFavorites)
         })
     }
 
-    
-    
- }
+
+
+}
